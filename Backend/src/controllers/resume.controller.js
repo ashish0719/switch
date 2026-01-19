@@ -53,26 +53,31 @@ export const optimizeResume = async (req, res) => {
         }
 
         // If resumeData came from body/JSON, it might be a stringified object if using FormData
-        if (typeof resumeData === 'string' && resumeData.trim().startsWith('{')) {
-            try { resumeData = JSON.parse(resumeData); } catch { }
+        if (typeof resumeData === 'string') {
+            try {
+                resumeData = JSON.parse(resumeData);
+            } catch (jsonErr) {
+                console.log("Error parsing resumeData JSON:", jsonErr);
+                // If it's just raw text, we might leave it as string or handle appropriately based on service expectation
+            }
         }
 
         // [FEATURE] EXPANDED USER PROFILE
-        // Fetch user data to inject Projects/Certs into AI prompt AND merge contact info
         let userProfile = null;
         if (req.body.userId) {
             try {
-                // Dynamic import to avoid circular dependency issues
-                const User = (await import("../models/User.model.js")).default;
+                // Use a standard import if possible, or keep dynamic if circular dependency is a hard constraint
+                const { default: User } = await import("../models/User.model.js");
                 const user = await User.findById(req.body.userId);
                 if (user) {
                     userProfile = {
-                        projects: user.projects,
-                        certifications: user.certifications
+                        projects: user.projects || [],
+                        certifications: user.certifications || []
                     };
                 }
             } catch (fetchErr) {
                 console.error("Error fetching user profile:", fetchErr);
+                // Non-critical, continue without profile
             }
         }
 
@@ -128,8 +133,8 @@ export const previewResume = async (req, res) => {
         res.send(pdfBuffer);
 
     } catch (err) {
-        console.error("Preview Error:", err.message);
-        res.status(500).json({ error: "Failed to generate preview" });
+        console.error("Preview Error Detail:", err);
+        res.status(500).json({ error: "Failed to generate preview: " + err.message });
     }
 };
 
