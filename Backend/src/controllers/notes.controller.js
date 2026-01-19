@@ -27,7 +27,6 @@ export const uploadNote = async (req, res) => {
         const note = new Note({
             title: title || file.originalname,
             fileKey,
-            fileUrl: "",
             type: file.mimetype,
             uploadedBy: req.user._id
         });

@@ -9,10 +9,11 @@ const noteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    fileUrl: {
+    fileKey: {
         type: String,
         required: true
     },
+    // fileUrl removed as it is generated dynamically (presigned)
     type: {
         type: String,
         required: true
