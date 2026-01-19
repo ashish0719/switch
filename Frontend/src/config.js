@@ -1,5 +1,5 @@
 const config = {
-    BACKEND_URL: "http://localhost:8000"
+    BACKEND_URL: "https://switch-1-ruof.onrender.com/"
 };
 
 export default config;
