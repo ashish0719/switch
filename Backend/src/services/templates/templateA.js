@@ -1,39 +1,34 @@
 export const renderTemplateA = (data) => {
-    const {
-        personalInfo = {},
-        summary = "",
-        education = [],
-        skills = {},
-        projects = [],
-        certifications = [],
-        interests = []
-    } = data;
+  const {
+    personalInfo = {},
+    summary = "",
+    education = [],
+    skills = {},
+    projects = [],
+    certifications = [],
+    interests = []
+  } = data;
 
-    // Helper for list items
-    const list = (items) =>
-        Array.isArray(items)
-            ? items.map(i => `<li>${i}</li>`).join("")
-            : "";
+  const list = (items) =>
+    Array.isArray(items) ? items.map(i => `<li>${i}</li>`).join("") : "";
 
-    // Helper for icon links
-    const linkIcon = (url) =>
-        url
-            ? `<a class="icon-link" href="${url}" target="_blank">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </a>`
-            : "";
+  const linkIcon = (url) =>
+    url
+      ? `<a class="icon-link" href="${url}" target="_blank">
+           <i class="fa-solid fa-arrow-up-right-from-square"></i>
+         </a>`
+      : "";
 
-    // Helper for contact info joining
-    const contactLinks = [
-        personalInfo.phone ? `<a href="tel:${personalInfo.phone}">${personalInfo.phone}</a>` : null,
-        personalInfo.email ? `<a href="mailto:${personalInfo.email}">${personalInfo.email}</a>` : null,
-        personalInfo.github ? `<a href="${personalInfo.github}" target="_blank">GitHub</a>` : null,
-        personalInfo.leetcode ? `<a href="${personalInfo.leetcode}" target="_blank">LeetCode</a>` : null,
-        personalInfo.linkedin ? `<a href="${personalInfo.linkedin}" target="_blank">LinkedIn</a>` : null,
-        personalInfo.portfolio ? `<a href="${personalInfo.portfolio}" target="_blank">Portfolio</a>` : null
-    ].filter(Boolean).join(" | ");
+  const contactLinks = [
+    personalInfo.phone ? `<a href="tel:${personalInfo.phone}">${personalInfo.phone}</a>` : null,
+    personalInfo.email ? `<a href="mailto:${personalInfo.email}">${personalInfo.email}</a>` : null,
+    personalInfo.github ? `<a href="${personalInfo.github}" target="_blank">GitHub</a>` : null,
+    personalInfo.leetcode ? `<a href="${personalInfo.leetcode}" target="_blank">LeetCode</a>` : null,
+    personalInfo.linkedin ? `<a href="${personalInfo.linkedin}" target="_blank">LinkedIn</a>` : null,
+    personalInfo.portfolio ? `<a href="${personalInfo.portfolio}" target="_blank">Portfolio</a>` : null
+  ].filter(Boolean).join(" | ");
 
-    return `
+  return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,114 +41,113 @@ export const renderTemplateA = (data) => {
 />
 
 <style>
-  body {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 12.5px;
-    line-height: 1.32;
-    color: #000;
-    margin: 15px 40px 40px 15px;
-  }
+body {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12.5px;
+  line-height: 1.32;
+  color: #000;
+  margin: 15px 40px 40px 15px;
+}
 
-  /* Header */
-  .header {
-    text-align: center;
-    margin-bottom: 10px;
-  }
+.header {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
-  .header h1 {
-    font-size: 26px;
-    margin: 0;
-    font-weight: bold;
-  }
+.header h1 {
+  font-size: 26px;
+  margin: 0;
+  font-weight: bold;
+}
 
-  .contact {
-    font-size: 12px;
-    margin-top: 4px;
-  }
+.contact {
+  font-size: 12px;
+  margin-top: 4px;
+}
 
-  .contact a {
-    color: #000;
-    text-decoration: none;
-    margin: 0 4px;
-  }
+.contact a {
+  color: #000;
+  text-decoration: none;
+  margin: 0 4px;
+}
 
-  /* Sections */
-  .section {
-    margin-top: 12px;
-  }
+.section {
+  margin-top: 12px;
+}
 
-  .section-title {
-    font-size: 16px;
-    font-weight: bold;
-    border-bottom: 1px solid #000;
-    margin-bottom: 4px;
-  }
+.section-title {
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+  margin-bottom: 4px;
+}
 
-  p {
-    margin: 2px 0;
-  }
+p {
+  margin: 2px 0;
+}
 
-  /* Education table */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-  td {
-    padding: 1px 0;
-    vertical-align: top;
-  }
+td {
+  padding: 1px 0;
+  vertical-align: top;
+}
 
-  .right {
-    text-align: right;
-    font-weight: bold;
-  }
+.right {
+  text-align: right;
+  font-weight: bold;
+}
 
-  /* Two-column layout */
-  .columns {
-    display: flex;
-    justify-content: space-between;
-  }
+.columns {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .column {
-    width: 48%;
-  }
+.column {
+  width: 48%;
+}
 
-  ul {
-    margin: 4px 0 4px 16px;
-    padding: 0;
-  }
+ul {
+  margin: 4px 0 4px 16px;
+  padding: 0;
+}
 
-  li {
-    margin-bottom: 2px;
-  }
+li {
+  margin-bottom: 2px;
+}
 
-  /* Projects */
-  .project-title {
-    font-weight: bold;
-  }
+.project-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
 
-  .project-meta {
-    float: right;
-    font-weight: bold;
-  }
+.project-title {
+  font-weight: bold;
+}
 
-  .icon-link {
-    margin-left: 6px;
-    color: #000;
-    font-size: 12px;
-    text-decoration: none;
-  }
+.project-meta {
+  font-weight: bold;
+}
 
-  .clear {
-    clear: both;
-  }
+.icon-link {
+  margin-left: 6px;
+  color: #000;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.icon-link i {
+  display: inline-block;
+}
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <h1>${personalInfo.name || ""}</h1>
   <div class="contact">
@@ -161,16 +155,12 @@ export const renderTemplateA = (data) => {
   </div>
 </div>
 
-<!-- SUMMARY -->
 ${summary ? `
 <div class="section">
   <div class="section-title">Summary</div>
-  <p>
-    ${summary}
-  </p>
+  <p>${summary}</p>
 </div>` : ""}
 
-<!-- EDUCATION -->
 ${education.length ? `
 <div class="section">
   <div class="section-title">Education</div>
@@ -183,14 +173,13 @@ ${education.length ? `
     </tr>
     <tr>
       <td>${edu.degree || ""}</td>
-      <td>${edu.score ? `CGPA: ${edu.score}` : ""}</td>
+      <td>${edu.score ? `CGPA: ${edu.score.replace(/CGPA:\\s*/i, "")}` : ""}</td>
       <td></td>
     </tr>
     `).join("")}
   </table>
 </div>` : ""}
 
-<!-- SKILLS -->
 ${Object.keys(skills).length ? `
 <div class="section">
   <div class="section-title">Skills</div>
@@ -199,12 +188,12 @@ ${Object.keys(skills).length ? `
     <div class="column">
       <strong>Technical Skills</strong>
       <ul>
-        ${skills.languages && skills.languages.length ? `<li><strong>Languages:</strong> ${skills.languages.join(", ")}</li>` : ""}
-        ${skills.frontend && skills.frontend.length ? `<li><strong>Frontend:</strong> ${skills.frontend.join(", ")}</li>` : ""}
-        ${skills.backend && skills.backend.length ? `<li><strong>Backend:</strong> ${skills.backend.join(", ")}</li>` : ""}
-        ${skills.databases && skills.databases.length ? `<li><strong>Databases:</strong> ${skills.databases.join(", ")}</li>` : ""}
-        ${skills.ai && skills.ai.length ? `<li><strong>AI / GenAI:</strong> ${skills.ai.join(", ")}</li>` : ""}
-        ${skills.tools && skills.tools.length ? `<li><strong>Tools:</strong> ${skills.tools.join(", ")}</li>` : ""}
+        ${skills.languages?.length ? `<li><strong>Languages:</strong> ${skills.languages.join(", ")}</li>` : ""}
+        ${skills.frontend?.length ? `<li><strong>Frontend:</strong> ${skills.frontend.join(", ")}</li>` : ""}
+        ${skills.backend?.length ? `<li><strong>Backend:</strong> ${skills.backend.join(", ")}</li>` : ""}
+        ${skills.databases?.length ? `<li><strong>Databases:</strong> ${skills.databases.join(", ")}</li>` : ""}
+        ${skills.ai?.length ? `<li><strong>AI / GenAI:</strong> ${skills.ai.join(", ")}</li>` : ""}
+        ${skills.tools?.length ? `<li><strong>Tools:</strong> ${skills.tools.join(", ")}</li>` : ""}
       </ul>
     </div>
 
@@ -224,18 +213,18 @@ ${Object.keys(skills).length ? `
   </div>
 </div>` : ""}
 
-<!-- PROJECTS -->
 ${projects.length ? `
 <div class="section">
   <div class="section-title">Projects</div>
   ${projects.map(proj => `
   <div class="project-item">
-    <p class="project-title">
-      ${proj.title || ""}
-      ${linkIcon(proj.link)}
+    <p class="project-title project-row">
+      <span>
+        ${proj.title || ""}
+        ${linkIcon(proj.link)}
+      </span>
       <span class="project-meta">${proj.duration || ""}</span>
     </p>
-    <div class="clear"></div>
     <ul>
       ${list(proj.details)}
     </ul>
@@ -243,14 +232,13 @@ ${projects.length ? `
   `).join("")}
 </div>` : ""}
 
-<!-- CERTIFICATIONS -->
 ${certifications.length ? `
 <div class="section">
   <div class="section-title">Certifications</div>
   <ul>
     ${certifications.map(cert => `
     <li>
-      <strong>${cert.name || cert}</strong> ${cert.platform ? `— ${cert.platform}` : ""}
+      <strong>${cert.name || cert}</strong>${cert.platform ? ` — ${cert.platform}` : ""}
       ${linkIcon(cert.link)}
     </li>
     `).join("")}

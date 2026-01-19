@@ -142,7 +142,13 @@ SCHEMA (IMMUTABLE)
       "details": []
     }
   ],
-  "certifications": [],
+  "certifications": [
+    {
+      "name": "Name of certification (Clean text only, REMOVE URLs)",
+      "platform": "Issuing platform/org",
+      "link": "" // Leave empty. Will be populated from User Profile.
+    }
+  ],
   "interests": []
 }
 

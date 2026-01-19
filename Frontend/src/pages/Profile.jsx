@@ -76,7 +76,11 @@ const Profile = () => {
         setMsg({ type: '', text: '' });
 
         const user = JSON.parse(localStorage.getItem('user'));
-        if (!user || !user.id) return;
+        if (!user || !user.id) {
+            setLoading(false);
+            setMsg({ type: 'error', text: 'User session invalid. Please login again.' });
+            return;
+        }
 
         try {
             const response = await fetch(`${config.BACKEND_URL}/api/auth/profile`, {

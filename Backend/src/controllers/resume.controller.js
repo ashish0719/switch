@@ -98,6 +98,43 @@ export const optimizeResume = async (req, res) => {
                     if (user.socialLinks.portfolio) optimizedResume.personalInfo.portfolio = user.socialLinks.portfolio;
                     if (user.socialLinks.phone) optimizedResume.personalInfo.phone = user.socialLinks.phone;
                 }
+
+                // 2. Merge Project Links (Only if project exists in optimized resume)
+                if (optimizedResume.projects && user.projects && user.projects.length > 0) {
+                    optimizedResume.projects = optimizedResume.projects.map(optProj => {
+                        // Find matching project in user profile (fuzzy match by title)
+                        const profileProj = user.projects.find(p =>
+                            p.name.toLowerCase().includes(optProj.title.toLowerCase()) ||
+                            optProj.title.toLowerCase().includes(p.name.toLowerCase())
+                        );
+
+                        // If found and has a link, add it
+                        if (profileProj && profileProj.link) {
+                            return { ...optProj, link: profileProj.link };
+                        }
+                        return optProj;
+                    });
+                }
+
+                // 3. Merge Certification Links
+                if (optimizedResume.certifications && user.certifications && user.certifications.length > 0) {
+                    optimizedResume.certifications = optimizedResume.certifications.map(optCert => {
+                        // Handle if AI returned string instead of object (legacy/fallback)
+                        let certName = typeof optCert === 'string' ? optCert : optCert.name;
+                        let certObj = typeof optCert === 'string' ? { name: optCert } : optCert;
+
+                        // Find matching cert in user profile
+                        const profileCert = user.certifications.find(c =>
+                            c.name.toLowerCase().includes(certName.toLowerCase()) ||
+                            certName.toLowerCase().includes(c.name.toLowerCase())
+                        );
+
+                        if (profileCert && profileCert.link) {
+                            return { ...certObj, link: profileCert.link };
+                        }
+                        return certObj;
+                    });
+                }
             } catch (mergeErr) {
                 console.error("Error merging user profile links:", mergeErr);
             }
