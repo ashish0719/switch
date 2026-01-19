@@ -104,8 +104,8 @@ export const optimizeResume = async (req, res) => {
                     optimizedResume.projects = optimizedResume.projects.map(optProj => {
                         // Find matching project in user profile (fuzzy match by title)
                         const profileProj = user.projects.find(p =>
-                            p.name.toLowerCase().includes(optProj.title.toLowerCase()) ||
-                            optProj.title.toLowerCase().includes(p.name.toLowerCase())
+                            (p.name || "").toLowerCase().includes((optProj.title || "").toLowerCase()) ||
+                            (optProj.title || "").toLowerCase().includes((p.name || "").toLowerCase())
                         );
 
                         // If found and has a link, add it
@@ -125,8 +125,8 @@ export const optimizeResume = async (req, res) => {
 
                         // Find matching cert in user profile
                         const profileCert = user.certifications.find(c =>
-                            c.name.toLowerCase().includes(certName.toLowerCase()) ||
-                            certName.toLowerCase().includes(c.name.toLowerCase())
+                            (c.name || "").toLowerCase().includes((certName || "").toLowerCase()) ||
+                            (certName || "").toLowerCase().includes((c.name || "").toLowerCase())
                         );
 
                         if (profileCert && profileCert.link) {

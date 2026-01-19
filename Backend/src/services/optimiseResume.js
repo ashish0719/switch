@@ -139,6 +139,7 @@ SCHEMA (IMMUTABLE)
   "projects": [
     {
       "title": "",
+      "link": "", // Leave empty. Will be populated from User Profile.
       "details": []
     }
   ],
