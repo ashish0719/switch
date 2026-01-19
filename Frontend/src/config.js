@@ -1,5 +1,3 @@
-const config = {
-    BACKEND_URL: "https://switch-1-ruof.onrender.com/"
-};
+BACKEND_URL: "https://switch-1-ruof.onrender.com"
 
 export default config;
