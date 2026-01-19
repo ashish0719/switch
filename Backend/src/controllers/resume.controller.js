@@ -99,14 +99,18 @@ export const optimizeResume = async (req, res) => {
                     if (user.socialLinks.phone) optimizedResume.personalInfo.phone = user.socialLinks.phone;
                 }
 
-                // 2. Merge Project Links (Only if project exists in optimized resume)
                 if (optimizedResume.projects && user.projects && user.projects.length > 0) {
                     optimizedResume.projects = optimizedResume.projects.map(optProj => {
                         // Find matching project in user profile (fuzzy match by title)
-                        const profileProj = user.projects.find(p =>
-                            (p.name || "").toLowerCase().includes((optProj.title || "").toLowerCase()) ||
-                            (optProj.title || "").toLowerCase().includes((p.name || "").toLowerCase())
-                        );
+                        const profileProj = user.projects.find(p => {
+                            const pName = (p.name || "").trim().toLowerCase();
+                            const optTitle = (optProj.title || "").trim().toLowerCase();
+
+                            // Skip if either is invalid or too short to save
+                            if (pName.length < 3 || optTitle.length < 3) return false;
+
+                            return pName.includes(optTitle) || optTitle.includes(pName);
+                        });
 
                         // If found and has a link, add it
                         if (profileProj && profileProj.link) {
@@ -124,10 +128,15 @@ export const optimizeResume = async (req, res) => {
                         let certObj = typeof optCert === 'string' ? { name: optCert } : optCert;
 
                         // Find matching cert in user profile
-                        const profileCert = user.certifications.find(c =>
-                            (c.name || "").toLowerCase().includes((certName || "").toLowerCase()) ||
-                            (certName || "").toLowerCase().includes((c.name || "").toLowerCase())
-                        );
+                        const profileCert = user.certifications.find(c => {
+                            const cName = (c.name || "").trim().toLowerCase();
+                            const optName = (certName || "").trim().toLowerCase();
+
+                            // Skip if either is invalid or too short
+                            if (cName.length < 3 || optName.length < 3) return false;
+
+                            return cName.includes(optName) || optName.includes(cName);
+                        });
 
                         if (profileCert && profileCert.link) {
                             return { ...certObj, link: profileCert.link };
