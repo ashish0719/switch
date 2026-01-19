@@ -209,19 +209,27 @@ const OptimizeResume = () => {
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center px-1">
                                         <label className="text-sm font-medium text-gray-300">Job Description</label>
-                                        <div className="flex bg-white/10 rounded-lg p-1">
+                                        <div className="flex items-center gap-3">
                                             <button
-                                                onClick={() => setJdMode('text')}
-                                                className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${jdMode === 'text' ? 'bg-yellow-400 text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                                onClick={() => navigate('/profile')}
+                                                className="bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-bold px-3 py-1.5 rounded-lg transition-all shadow-lg hover:shadow-yellow-400/20 mr-2"
                                             >
-                                                Text
+                                                Add Project Links
                                             </button>
-                                            <button
-                                                onClick={() => setJdMode('file')}
-                                                className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${jdMode === 'file' ? 'bg-yellow-400 text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
-                                            >
-                                                File
-                                            </button>
+                                            <div className="flex bg-white/10 rounded-lg p-1">
+                                                <button
+                                                    onClick={() => setJdMode('text')}
+                                                    className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${jdMode === 'text' ? 'bg-yellow-400 text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                                >
+                                                    Text
+                                                </button>
+                                                <button
+                                                    onClick={() => setJdMode('file')}
+                                                    className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${jdMode === 'file' ? 'bg-yellow-400 text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                                >
+                                                    File
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -264,6 +272,19 @@ const OptimizeResume = () => {
                                         />
                                     )}
                                 </div>
+                            </div>
+
+                            {/* Helper Link for Profile */}
+                            <div className="text-center">
+                                <p className="text-sm text-gray-500 mb-2">
+                                    Want to include your latest project links?
+                                </p>
+                                <button
+                                    onClick={() => navigate('/profile')}
+                                    className="text-yellow-400 hover:text-yellow-300 text-sm font-medium underline underline-offset-4 transition-colors"
+                                >
+                                    Update Profile Links First
+                                </button>
                             </div>
 
                             {/* Error Message */}
